@@ -4,6 +4,11 @@
 <title>Process Manager</title>
 
 <style>
+body {
+	font-family: arial, sans-serif;
+	font-size: 10pt;
+}
+
 #processTableHeader {
 	border: 1px solid #dddddd;
 	font-family: arial, sans-serif;
@@ -32,7 +37,7 @@
 
 <script language="JavaScript">
 	// More info about GetObject("WinMgmts:").InstancesOf("Win32_Process"), see: https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-process
-	
+
 	var searchString = ""
 	
 	function clearSearchProcess(){
@@ -148,6 +153,10 @@
 	}
 
 	window.onload = function() {
+		var net = new ActiveXObject ( "WScript.NetWork" );
+		var username = net.UserName;
+		document.getElementById("userName").innerHTML = "<b>User Name: </b> " + username
+		
 		getSysRunningProccesses()
 	}
 	refreshInterval = setInterval(getSysRunningProccesses, 2000);
@@ -156,8 +165,8 @@
 
 <body bgcolor="#FFFFFF">
 	<input id="searchProcessName" type="text" onClick="this.select();"></input>
-	<button onclick="clearSearchProcess()">Clear Search</button>
-	<br/><br/>
+	<button onclick="clearSearchProcess()">Clear Search</button> <span id="userName" style="text-align: right; float: right"></span>
+	<br/> <br/>
 	<table id="processTableHeader">
 		<tr>
 			<th>No.</th>
@@ -173,6 +182,3 @@
     <div style="height:90%; overflow:auto; width:100%" id="processTableDisplay"></div>
 </body>
 </html>
-
-
-
